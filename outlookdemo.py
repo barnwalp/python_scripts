@@ -1,5 +1,6 @@
-from exchangelib import Credentials, Account
+from exchangelib import Credentials, Account, Message, Mailbox
 from exchangelib import DELEGATE, Configuration
+# from exchangelib.items import SEND_ONLY_TO_ALL, SEND_ONLY_TO_CHANGED
 import os
 
 # getting the sensitive information from enviornment variables
@@ -18,5 +19,17 @@ account = Account(primary_smtp_address=outlook_email,
                   config=config, autodiscover=False,
                   access_type=DELEGATE)
 
-for item in account.inbox.all().order_by('-datetime_received')[:10]:
-    print(item.subject, item.sender, item.datetime_received)
+# for item in account.inbox.all().order_by('-datetime_received')[:10]:
+#    print(item.subject, item.sender, item.datetime_received)
+
+msg = Message(
+    account=account,
+    subject='mail from the python program',
+    body='test mail',
+    to_recipients=[
+        Mailbox(email_address='shubhams@indianoil.in')
+    ],
+    cc_recipients=['barnwalp.ioc@gmail.com', 'barnwalp@indianoil.in'],
+    bcc_recipients=['suno.pankaj@gmail.com']
+)
+msg.send_and_save()
