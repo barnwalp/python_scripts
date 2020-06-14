@@ -22,14 +22,32 @@ account = Account(primary_smtp_address=outlook_email,
 # for item in account.inbox.all().order_by('-datetime_received')[:10]:
 #    print(item.subject, item.sender, item.datetime_received)
 
+# Sending simple text mail to to, cc & bcc list
 msg = Message(
     account=account,
-    subject='mail from the python program',
-    body='test mail',
+    subject='another test mail',
+    body='this is an another random body for testing mail services',
     to_recipients=[
-        Mailbox(email_address='shubhams@indianoil.in')
+        # Mailbox(email_address='shubhams@indianoil.in')
+        Mailbox(email_address='barnwalp@indianoil.in')
     ],
-    cc_recipients=['barnwalp.ioc@gmail.com', 'barnwalp@indianoil.in'],
-    bcc_recipients=['suno.pankaj@gmail.com']
+    # cc_recipients=['barnwalp.ioc@gmail.com', 'barnwalp@indianoil.in'],
+    # bcc_recipients=['suno.pankaj@gmail.com']
 )
-msg.send_and_save()
+
+# it will sent and save the mail in the sent folder
+# msg.send_and_save()
+
+# replying to a mail that are stored in the mailbox, i.e. they have a
+# valid item ID
+msg_in_mail = account.sent.get(subject='another test mail')
+msg_in_mail.reply(
+    subject='RE: another test mail',
+    body='reply tested-2',
+    to_recipients=['barnwalp@indianoil.in',
+                   'barnwalp.ioc@gmail.com'
+                   ]
+)
+
+# replying to all recipients
+msg_in_mail.reply_all(subject='another test mail', body='reply all tested')
