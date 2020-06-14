@@ -31,16 +31,16 @@ msg = Message(
         # Mailbox(email_address='shubhams@indianoil.in')
         Mailbox(email_address='barnwalp@indianoil.in')
     ],
-    # cc_recipients=['barnwalp.ioc@gmail.com', 'barnwalp@indianoil.in'],
-    # bcc_recipients=['suno.pankaj@gmail.com']
+    cc_recipients=['barnwalp.ioc@gmail.com', 'barnwalp@indianoil.in'],
+    bcc_recipients=['suno.pankaj@gmail.com']
 )
 
 # it will sent and save the mail in the sent folder
-# msg.send_and_save()
+msg.send_and_save()
 
 # replying to a mail that are stored in the mailbox, i.e. they have a
 # valid item ID
-msg_in_mail = account.sent.get(subject='another test mail')
+msg_in_mail = account.inbox.get(subject='Fwd: Ethanol Handling')
 msg_in_mail.reply(
     subject='RE: another test mail',
     body='reply tested-2',
@@ -51,3 +51,9 @@ msg_in_mail.reply(
 
 # replying to all recipients
 msg_in_mail.reply_all(subject='another test mail', body='reply all tested')
+
+msg_in_mail.forward(
+    subject='FW: Ethanol Handling',
+    body='Hey, look at this',
+    to_recipients=['barnwalp.ioc@gmail.com']
+)
