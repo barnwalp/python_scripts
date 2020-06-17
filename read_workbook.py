@@ -31,4 +31,6 @@ for ws in wb:
 ws4['A1'] = datetime.now()
 print(f'{ws4["A1"].value} --> {ws["A1"].number_format}')
 
+# Using excel formula in python
+ws4['A2'] = "=SUM(1, 1)"
 wb.save('automation mis.xlsx')
