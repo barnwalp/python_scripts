@@ -43,4 +43,12 @@ ws.unmerge_cells('B3:D3')
 # ws.column_dimensions.group('C', 'E', hidden=False)
 # ws.row_dimensions.group(4, 10, hidden=False)
 
+# Inserting Rows and columns
+# This will insert a row before existing 7 rows
+ws.insert_rows(7)
+
+# Deleting columns F:I
+ws.delete_cols(6, 4)
+
+ws['C2'] = "This is a string"
 wb.save('automation mis.xlsx')
