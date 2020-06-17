@@ -23,14 +23,24 @@ for char in 'ABCDEFGH':
     str = char + "1"
     print(ws1[str].value)
 """
-ws4 = wb.create_sheet("testing")
+# ws4 = wb.create_sheet("testing")
 
-for ws in wb:
-    print(ws.title)
+# for ws in wb:
+#     print(ws.title)
 
-ws4['A1'] = datetime.now()
-print(f'{ws4["A1"].value} --> {ws["A1"].number_format}')
+# ws4['A1'] = datetime.now()
+# print(f'{ws4["A1"].value} --> {ws["A1"].number_format}')
 
 # Using excel formula in python
-ws4['A2'] = "=SUM(1, 1)"
+# ws4['A2'] = "=SUM(1, 1)"
+
+ws = wb["testing"]
+# merge and unmerge in excel
+ws.merge_cells('B3:D3')
+ws.unmerge_cells('B3:D3')
+
+# fold and unfold cells
+# ws.column_dimensions.group('C', 'E', hidden=False)
+# ws.row_dimensions.group(4, 10, hidden=False)
+
 wb.save('automation mis.xlsx')
