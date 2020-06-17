@@ -2,6 +2,14 @@ from openpyxl import load_workbook
 from datetime import datetime, date, time, timezone
 
 
+# python datetime module
+print(f'current date and time: {datetime.now()}')
+print(f'Date is: {date(2005, 7, 14)}')
+print(f'Time is: {time(12, 30)}')
+print(f'datetime is: {datetime.combine(date(2005, 7, 14), time(12, 30))}')
+print(f'datetime with timezone: {datetime.now(timezone.utc)}')
+print(f'datetime: {datetime.strptime("17/06/20 08:30", "%d/%m/%y %H:%M")}')
+
 wb = load_workbook(filename='automation mis.xlsx')
 
 # get the worksheet to work on
@@ -20,10 +28,7 @@ ws4 = wb.create_sheet("testing")
 for ws in wb:
     print(ws.title)
 
-# python datetime module
-print(f'current date and time: {datetime.now()}')
-print(f'Date is: {date(2005, 7, 14)}')
-print(f'Time is: {time(12, 30)}')
-print(f'datetime is: {datetime.combine(date(2005, 7, 14), time(12, 30))}')
-print(f'datetime with timezone: {datetime.now(timezone.utc)}')
-print(f'datetime: {datetime.strptime("17/06/20 08:30", "%d/%m/%y %H:%M")}')
+ws4['A1'] = datetime.now()
+print(f'{ws4["A1"].value} --> {ws["A1"].number_format}')
+
+wb.save('automation mis.xlsx')
