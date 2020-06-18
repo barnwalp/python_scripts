@@ -24,6 +24,7 @@ def is_not_str(x):
         return True
 
 
+"""
 for cell in ws['S']:
     value_1 = f'P{cell.row}'
     value_2 = f'Q{cell.row}'
@@ -34,5 +35,14 @@ for cell in ws['S']:
                   ]
     # filter will return only those value which are neither None nor int
     cell.value = ', '.join(filter(is_not_str, merge_list))
+"""
 
+# copy entire worksheet for mail
+# ws2 = wb.copy_worksheet(ws)
+# ws2.title = "mail"
+
+ws2 = wb["mail"]
+# ws2.delete_cols(13, 6)
+# ws2.delete_cols(8, 4)
+# ws2.delete_cols(4, 2)
 wb.save('eRACTS Complaint.xlsx')
