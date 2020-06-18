@@ -45,4 +45,21 @@ ws2 = wb["mail"]
 # ws2.delete_cols(13, 6)
 # ws2.delete_cols(8, 4)
 # ws2.delete_cols(4, 2)
-wb.save('eRACTS Complaint.xlsx')
+
+filter_value = {'Auto-Closed for Dealer Late Acknowledgement',
+                'Service Completed',
+                'Auto-Closed on Alarm Normalization'
+                }
+# Deleting all complaints which have been closed
+"""
+for cell in ws2['H']:
+    if cell.row > 1:
+        if cell.value in filter_value:
+            print(cell.value)
+            ws2.delete_rows(cell.row)
+"""
+# ws2.delete_cols(8)
+ws2['H1'] = "Current Status of complaint"
+ws2['I1'] = "Target Date"
+
+# wb.save('eRACTS Complaint.xlsx')
