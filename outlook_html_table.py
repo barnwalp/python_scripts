@@ -33,14 +33,14 @@ mail_body = HTMLBody(
             </h3>
             <table>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th><%= ws['A1'].value %></th>
+                    <th><%= ws['B1'].value %></th>
+                    <th><%= ws['C1'].value %></th>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><%= ws['A2'].value %></td>
+                    <td><%= ws['B2'].value %></td>
+                    <td><%= ws['C2'].value %></td>
                 </tr>
         </body>
     </html>
