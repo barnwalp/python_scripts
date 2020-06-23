@@ -22,7 +22,7 @@ ws = wb["mail"]
 
 # contains content in HTML format
 html = """
-<html><body><h1>Pl find the current list of eRACTS complaint which have not yet been resolved, pl go through each case and provide current status of complaint and target date of rectification:</h1>
+<html><body><h3>Pl find the current list of eRACTS complaint which have not yet been resolved, pl go through each case and provide current status of complaint and target date of rectification:</h3>
 """
 
 for whole_row in ws.iter_rows(min_row=1, max_row=1):
@@ -34,10 +34,22 @@ for whole_row in ws.iter_rows(min_row=1, max_row=1):
 for whole_row in ws.iter_rows(min_row=2):
     html += "<tr>"
     for row in whole_row:
-        html += f'<td>{row.value}</td>'
+        if row.value is not None:
+            html += f'<td>{row.value}</td>'
+        else:
+            html += f'<td>{" "}</td>'
     html += "</tr>"
 
-html += "</table></body></html>"
+html += """
+</table>
+<p>
+<br>
+With Regards<br>
+Pankaj Barnwal<br>
+</p>
+</body>
+</html>
+"""
 # print(html)
 
 msg = Message(
