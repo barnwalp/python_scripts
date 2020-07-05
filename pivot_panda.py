@@ -2,6 +2,7 @@ import pandas as pd
 from openpyxl import load_workbook
 from datetime import date, timedelta
 import numpy as np
+import openpyxl
 
 
 def cell_to_num(char):
@@ -63,7 +64,13 @@ print(df.columns)
 ws = wb.active
 print(ws['G1'].value)
 
-print(pd.pivot_table(df,
-                     index=["SA"],
-                     values=["2020-07-03", "2020-07-02"],
-                     aggfunc=np.sum))
+pvt_all = pd.pivot_table(df,
+                         index=["SA"],
+                         columns=['Product'],
+                         values=["2020-07-03", "2020-07-02"],
+                         aggfunc=np.sum)
+
+# Writing panda pivot table to excel sheet
+with pd.ExcelWriter(path, engine='openpyxl') as writer:
+    writer.book = openpyxl.load_workbook(path)
+    pvt_all.to_excel(writer, "pivot sheet", index=True)
