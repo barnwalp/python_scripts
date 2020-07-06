@@ -56,10 +56,12 @@ def data_cleaning(path):
 
 def create_pivot(path):
     # reading excel file using pandas
-    old_df = pd.read_excel(first_file)
+    old_df = pd.read_excel(path)
+    current_wb = load_workbook(path)
+    ws = current_wb.active
     # print(old_df.columns)
 
-    # filter the table using product value
+    # filter out the 'NA' value in the product column
     df = old_df[
         (old_df['Product'] == 'XP') |
         (old_df['Product'] == 'HS') |
@@ -75,7 +77,7 @@ def create_pivot(path):
     pvt_all = pd.pivot_table(df,
                              index=["SA"],
                              columns=['Product'],
-                             values=["2020-07-04", "2020-07-03"],
+                             values=[ws['H1'].value, ws['G1'].value],
                              aggfunc=np.sum)
 
     return pvt_all
@@ -84,15 +86,30 @@ def create_pivot(path):
 # data_cleaning(first_file)
 # data_cleaning(second_file)
 
-# print(type(create_pivot(first_file)))
+# print(create_pivot(first_file))
 # print('------------------------------------------------------------')
 # print(create_pivot(second_file))
 
 # concatenate two pivot table into single dataframe
 pvt = pd.concat([create_pivot(first_file), create_pivot(second_file)], axis=1)
 
-
+"""
 # Writing panda pivot table to excel sheet
 with pd.ExcelWriter(first_file, engine='openpyxl') as writer:
     writer.book = openpyxl.load_workbook(first_file)
     pvt.to_excel(writer, "pivot sheet", index=True)
+"""
+df = pd.read_excel(first_file, sheet_name='pivot sheet')
+# print(df.columns.values)
+# df = df[['Unnamed: 0', '2020-07-04', 'Unnamed: 4',
+#          '2020-07-03', 'Unnamed: 2', '2020-07-02',
+#          'Unnamed: 8', '2020-07-01', 'Unnamed: 6']]
+
+# print(df)
+# for index, col_value in df.iterrows():
+#     print('check')
+
+# Writing modified pivot table to excel sheet
+with pd.ExcelWriter(first_file, engine='openpyxl') as writer:
+    writer.book = openpyxl.load_workbook(first_file)
+    df.to_excel(writer, "pivot sheet", index=True)
