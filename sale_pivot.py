@@ -31,12 +31,12 @@ def data_cleaning(path):
     ws.unmerge_cells('U1:V1')
     if path[-7] == '1':
         # renaming issue_sale value with dates
-        ws['S1'] = str(date.today() - timedelta(days=3))
-        ws['T1'] = str(date.today() - timedelta(days=4))
+        ws['S1'] = str(date.today() - timedelta(days=4))
+        ws['T1'] = str(date.today() - timedelta(days=3))
     else:
         # renaming issue_sale value with dates
-        ws['S1'] = str(date.today() - timedelta(days=1))
-        ws['T1'] = str(date.today() - timedelta(days=2))
+        ws['S1'] = str(date.today() - timedelta(days=2))
+        ws['T1'] = str(date.today() - timedelta(days=1))
 
     print(ws['S1'].value)
     print(ws['T1'].value)
@@ -83,8 +83,8 @@ def create_pivot(path):
     return pvt_all
 
 
-# data_cleaning(first_file)
-# data_cleaning(second_file)
+data_cleaning(first_file)
+data_cleaning(second_file)
 
 # print(create_pivot(first_file))
 # print('------------------------------------------------------------')
@@ -93,12 +93,11 @@ def create_pivot(path):
 # concatenate two pivot table into single dataframe
 pvt = pd.concat([create_pivot(first_file), create_pivot(second_file)], axis=1)
 
-"""
 # Writing panda pivot table to excel sheet
 with pd.ExcelWriter(first_file, engine='openpyxl') as writer:
     writer.book = openpyxl.load_workbook(first_file)
     pvt.to_excel(writer, "pivot sheet", index=True)
-"""
+
 df = pd.read_excel(first_file, sheet_name='pivot sheet')
 # print(df.columns.values)
 # df = df[['Unnamed: 0', '2020-07-04', 'Unnamed: 4',
