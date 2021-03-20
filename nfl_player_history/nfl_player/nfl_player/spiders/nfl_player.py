@@ -1,20 +1,24 @@
 import scrapy
 
 
-class QuoteSpider(scrapy.Spider):
-    name = 'quote'
+class NflSpider(scrapy.Spider):
+    name = 'nfl'
     start_urls = [
-        'http://quotes.toscrape.com/page/1/'
+        'https://www.nfl.com/players/active/a'
     ]
+    """
+    To select the selected dropdown in option tag
+    //*[@id='year-dropdown']//option[@selected]//text()
+    """
 
     def parse(self, response):
-        for quote in response.css('.row .col-md-8 .quote'):
+        for row in response.css('.d3-o-table--horizontal-scroll table'):
             yield{
-                'post': quote.css('span.text::text').get(),
-                'author': quote.css('.author::text').get(),
-                'tags': quote.css('.keywords').attrib['content']
+                'player': row.xpath("//tr//td[1]//div//a//text()").get(),
+                'team': row.xpath("//tr//td[2]//text()").get()
             }
-        next_page = response.css('.pager a::attr(href)').get()
+        next_page = response.css(
+            '.nfl-o-table-pagination__buttons a::attr(href)').get()
         if next_page is not None:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page, callback=self.parse)
