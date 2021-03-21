@@ -8,8 +8,14 @@ class NflSpider(scrapy.Spider):
     ]
     # To select the selected dropdown in option tag
     # //*[@id='year-dropdown']//option[@selected]//text()
-
+    
     def parse(self, response):
+        links = response.css(".d3-o-tabs__list-item a::attr(href)").getall()[1:]
+        for link in links:
+            next_link = response.urljoin(link)
+            yield scrapy.Request(next_link, callback=self.parse_links)
+
+    def parse_links(self, response):
         rows = response.css('.d3-o-table--horizontal-scroll table tbody tr')
         for row in rows:
             yield{
@@ -25,4 +31,4 @@ class NflSpider(scrapy.Spider):
             '.nfl-o-table-pagination__buttons a::attr(href)').get()
         if next_page is not None:
             next_page = response.urljoin(next_page)
-            yield scrapy.Request(next_page, callback=self.parse)
+            yield scrapy.Request(next_page, callback=self.parse_links)
