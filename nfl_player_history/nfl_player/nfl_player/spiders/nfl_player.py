@@ -10,6 +10,8 @@ class NflSpider(scrapy.Spider):
     # //*[@id='year-dropdown']//option[@selected]//text()
     
     def parse(self, response):
+        # checking the response header for ip address
+        # print(f'### PRINTING HEADER FROM PARSE METOD ### {response.headers}')
         links = response.css(".d3-o-tabs__list-item a::attr(href)").getall()[1:]
         for link in links:
             next_link = response.urljoin(link)

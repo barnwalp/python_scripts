@@ -19,6 +19,9 @@ NEWSPIDER_MODULE = 'nfl_player.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
+# Enable Scrapy Proxy Pool
+# PROXY_POOL_ENABLED = True
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -48,6 +51,9 @@ ROBOTSTXT_OBEY = True
 #    'nfl_player.middlewares.NflPlayerSpiderMiddleware': 543,
 #}
 
+# ----------------------------------------
+# USER-AGENT
+# ----------------------------------------
 # scrapy-user-agents uses a file with 2200 user-agent strings collected from 
 # <https://developers.whatismybrowser.com/> using 
 # <https://github.com/hyan15/crawler-demo/tree/master/crawling-basic/common_user_agents>. 
@@ -57,6 +63,14 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
 }
 
+# ----------------------------------------
+# SCRAPY PROXY POOL
+# ----------------------------------------
+
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
+#     'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
+# }
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
