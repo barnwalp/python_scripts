@@ -64,7 +64,7 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 # ----------------------------------------
-# SCRAPY PROXY POOL
+# SCRAPY PROXY POOL - NOT WORKING
 # ----------------------------------------
 
 # DOWNLOADER_MIDDLEWARES = {
