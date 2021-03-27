@@ -17,5 +17,10 @@ class FundSpider(scrapy.Spider):
     """
     def parse(self, response):
         # data = response.css("tbody tr[role='row'] td:first-of-type a::text").getall()
-        data = response.css('#fund-selector-data').get()
-        yield data
+        data = response.css('#selector-tab li a::text').getall()
+        # Since data is an list, it can not be returned by scrapy.
+        # it can either be request, item or None
+        row_list = dict()
+        for index, value in enumerate(data):
+            row_list[index] = value
+        yield row_list
