@@ -24,3 +24,5 @@ class FundSpider(scrapy.Spider):
         for index, value in enumerate(data):
             row_list[index] = value
         yield row_list
+
+    # scraping dynamic website using javascript
