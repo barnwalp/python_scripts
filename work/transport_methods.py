@@ -46,8 +46,15 @@ def revenue_share(owner_share, rtkm, tt_capacity, no_of_trip):
     # print(fixed_yearly_expense)
     # print(per_trip_expense)
     net_profit = revenue_per_month - fixed_monthly_expense - per_trip_expense - owner_value - tt_dict['emi_7_monthly']
+
+    own_profit = net_profit * 0.4
+    percentage_share = own_profit / revenue_per_month
     print(f'{revenue_per_month} --> {fixed_monthly_expense} --> {per_trip_expense} --> {owner_value}')
-    return net_profit
+    return net_profit, own_profit, percentage_share
 
 
-print(revenue_share(0.08, 800, 14, 7))
+if __name__ == '__main__':
+    print('owner share is 8%')
+    print(revenue_share(0.08, 1100, 22, 8)[0])
+    print('owner share is 0%')
+    print(revenue_share(0.00, 1100, 22, 7)[1])
