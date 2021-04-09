@@ -37,7 +37,7 @@ def revenue_share(owner_share, rtkm, tt_capacity, no_of_trip):
 
     per_trip_expense = per_trip_cost(rtkm, tt_capacity, no_of_trip)
     fixed_monthly_expense = fixed_cost(tt_capacity)
-    
+
     net_profit = revenue_per_month - fixed_monthly_expense - per_trip_expense - owner_value
     own_profit = net_profit * 0.4
     percentage_share = own_profit / revenue_per_month

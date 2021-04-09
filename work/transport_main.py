@@ -7,7 +7,19 @@ import openpyxl
 
 os.chdir('D:\Personal\Reports')
 # print(os.listdir())
-df = pd.read_excel('Monthly Calculation - Transport.xlsx', sheet_name='Master')
+df = pd.read_excel('Transport Calculation.xlsx', sheet_name='Master')
+vehicle_dict = df[['Vehicle Number', 'TT Details']].set_index('Vehicle Number').T.to_dict('list')
+
+# we can remove nan key in dictionary by simple list comprehension based on
+# on the fact that nan does not equal itself
+vehicle_dict = {k: v for k, v in vehicle_dict.items() if k == k}
+for key, value in vehicle_dict.items():
+    monthly_fixed_cost = fixed_cost(value[0])/12
+    vehicle_dict[key].append(monthly_fixed_cost)
+
+print(vehicle_dict)
+
+"""
 net_profit = []
 own_profit = []
 percent_share = []
@@ -34,3 +46,4 @@ print(df.head())
 with pd.ExcelWriter('Monthly Calculation - Transport.xlsx', engine='openpyxl') as writer:
     writer.book = load_workbook('Monthly Calculation - Transport.xlsx')
     df.to_excel(writer, index=False)
+"""
