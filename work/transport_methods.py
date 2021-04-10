@@ -124,8 +124,8 @@ def per_trip_cost(rtkm, tt_capacity, no_of_trip):
 
     fuel_cost = (rtkm/tt_dict['mileage']) * hsd_rate
 
-    per_trip_expense = (tt_dict['toll_per_trip'] + tt_dict['per_trip_expense'] + tt_dict['per_trip_fooding'] + fuel_cost) * no_of_trip + tds
-    return per_trip_expense
+    trip_expense = (tt_dict['toll_per_trip'] + tt_dict['per_trip_expense'] + tt_dict['per_trip_fooding'] + fuel_cost) * no_of_trip + tds
+    return trip_expense
 
 
 if __name__ == '__main__':
