@@ -22,7 +22,7 @@ for key, value in vehicle_data.items():
     vehicle_data[key].append(monthly_fixed_cost)
 
 for key, value in trip_dict.items():
-    per_trip_expense = per_trip_cost(value[3], value[4], value[5])
+    per_trip_expense = per_trip_cost(value[3], value[4], value[5], value[2])
     revenue_per_month = value[3] * value[4] * vehicle_data[value[4]][0] * value[5]
     trip_dict[key].append((revenue_per_month))
     trip_dict[key].append(per_trip_expense)
@@ -35,14 +35,13 @@ for key1, value1 in vehicle_dict.items():
     profit = profit - vehicle_data[value1[0]][1]
     vehicle_dict[key1].append(profit)
 
-# Deducting fixed cost of the vehicle
-for key, value in vehicle_dict.items():
-    print(f'{key}{value}')
-
-
 df_dict = pd.DataFrame.from_dict(vehicle_dict, orient='index')
-print(vehicle_dict)
+df_trip = pd.DataFrame.from_dict(trip_dict, orient='index')
 
 with pd.ExcelWriter('Transport Calculation.xlsx', engine='openpyxl') as writer:
     writer.book = load_workbook('Transport Calculation.xlsx')
     df_dict.to_excel(writer, index=True)
+
+with pd.ExcelWriter('Transport Calculation.xlsx', engine='openpyxl') as writer:
+    writer.book = load_workbook('Transport Calculation.xlsx')
+    df_trip.to_excel(writer, index=True)
