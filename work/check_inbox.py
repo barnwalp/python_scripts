@@ -32,27 +32,18 @@ def filter_sender(mail, sender):
         email_message = email.message_from_string(raw_email)
         if email_message["From"] == sender:
             print(f'Email subject: {email_message["Subject"]}')
+            print(f'Email content: {get_body(email_message)}')
 
-    # method available with email message
-    # print(dir(email_message))
-    # print(f'Email is From: {email_message["From"]}')
-    # print(f'Email is send to: {email_message["To"]}')
-    # print(f'Email subject is: {email_message["Subject"]}')
+
+def get_body(msg):
+    # Checking if mail have attachements as well
+    if msg.is_multipart():
+        # multipart email body is returned as a list
+        # getting the first element of the returned list
+        return get_body(msg.get_payload(0))
+    else:
+        return msg.get_payload(None, True)
 
 
 sender = 'vyapar123@outlook.com'
 filter_sender(connect(), sender)
-
-# get content type of email body
-# print(email_message.get_payload())
-# _, search_data = mail.search(None, "UNSEEN")
-# # print(search_data)
-
-# for num in search_data[0].split():
-#     _, data = mail.fetch(num, '(RFC822)')
-#     # print(data)
-#     _, b = data[0]
-#     # print(b)
-#     email_message = email.message_from_bytes(b)
-#     print(email_message)
-# # print(search_data)
