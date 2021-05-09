@@ -30,6 +30,7 @@ def filter_sender(mail, sender):
         raw_email = email_data[0][1].decode('utf-8', errors='ignore')
         # converting raw_email string to email message
         email_message = email.message_from_string(raw_email)
+        # print(f'Email Sender: {email_message["From"]}')
         if email_message["From"] == sender:
             print(f'Email subject: {email_message["Subject"]}')
             print(f'Email content: {get_body(email_message)}')
@@ -45,5 +46,25 @@ def get_body(msg):
         return msg.get_payload(None, True)
 
 
-sender = 'vyapar123@outlook.com'
-filter_sender(connect(), sender)
+def get_dsr(mail, sender):
+    mail.select('inbox')
+    # all uid will be returned as byte string, result = OK
+    # and data = [b'5 20 21 25 27 29 31 33 35 37]
+    result, data = mail.uid('search', None, 'ALL')
+
+    # convert strings to a list
+    inbox_item_list = data[0].split()
+    for value in reversed(inbox_item_list):
+        # fetching the email data in bytes
+        result2, email_data = mail.uid('fetch', value, '(RFC822)')
+        # converting byte email to raw_email data
+        raw_email = email_data[0][1].decode('utf-8', errors='ignore')
+        # converting raw_email string to email message
+        email_message = email.message_from_string(raw_email)
+        if email_message["Subject"].lower().__contains__("dsr"):
+            print(get_body(email_message))
+
+
+sender = 'Sardar Khan <vyapar123@outlook.com>'
+# filter_sender(connect(), sender)
+get_dsr(connect(), sender)
