@@ -67,7 +67,8 @@ def get_dsr(mail, sender):
             data = get_body(email_message).decode('utf-8')
             # with open('body.txt', 'w') as f:
             #     f.write(get_body(email_message).decode('utf-8'))
-    literal_search(data)
+    ms_dsr = literal_search(data)
+    return ms_dsr
 
 
 def literal_search(data):
@@ -89,8 +90,11 @@ def literal_search(data):
     val_list = []
     pattern_2 = re.compile(r'\d+')
     for val in m:
-        val_list.append(pattern_2.search(val).group())
-    print(val_list)
+        val_list.append(int(pattern_2.search(val).group()))
+
+    # Creating a dictionary using 2 list
+    ms_dsr = {ms_list[i]: val_list[i] for i in range(len(ms_list))}
+    return ms_dsr
 
 
 sender = 'Sardar Khan <vyapar123@outlook.com>'
