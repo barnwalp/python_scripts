@@ -106,6 +106,7 @@ def literal_search(data):
     dsr = {ms_hsd_list[i]: val_list[i] for i in range(len(ms_hsd_list))}
     return dsr
 
+
 sender = 'Sardar Khan <vyapar123@outlook.com>'
 # filter_sender(connect(), sender)
 print(get_dsr(connect(), sender))
