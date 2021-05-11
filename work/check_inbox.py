@@ -1,6 +1,7 @@
 import imaplib
 import email
 import os
+import re
 
 
 # Hotmail configuration using imap protocol
@@ -54,7 +55,7 @@ def get_dsr(mail, sender):
 
     # convert strings to a list
     inbox_item_list = data[0].split()
-    for value in reversed(inbox_item_list):
+    for value in inbox_item_list:
         # fetching the email data in bytes
         result2, email_data = mail.uid('fetch', value, '(RFC822)')
         # converting byte email to raw_email data
@@ -62,9 +63,36 @@ def get_dsr(mail, sender):
         # converting raw_email string to email message
         email_message = email.message_from_string(raw_email)
         if email_message["Subject"].lower().__contains__("dsr"):
-            print(get_body(email_message))
+            # print(get_body(email_message).decode('utf-8'))
+            data = get_body(email_message).decode('utf-8')
+            # with open('body.txt', 'w') as f:
+            #     f.write(get_body(email_message).decode('utf-8'))
+    literal_search(data)
+
+
+def literal_search(data):
+    ms_list = [
+        'ms_dip',
+        'ms_water_dip',
+        'ms_opening_stock',
+        'ms_receipt',
+        'ms_total_stock',
+        'ms_totalizer_1',
+        'ms_totalizer_2',
+        'ms_testing',
+        'ms_sales',
+        'ms_cumulative_sales'
+    ]
+
+    pattern_1 = re.compile(r'\s\d+\s')
+    m = pattern_1.findall(data)
+    val_list = []
+    pattern_2 = re.compile(r'\d+')
+    for val in m:
+        val_list.append(pattern_2.search(val).group())
+    print(val_list)
 
 
 sender = 'Sardar Khan <vyapar123@outlook.com>'
 # filter_sender(connect(), sender)
-get_dsr(connect(), sender)
+print(get_dsr(connect(), sender))
