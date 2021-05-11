@@ -72,7 +72,7 @@ def get_dsr(mail, sender):
 
 
 def literal_search(data):
-    ms_list = [
+    ms_hsd_list = [
         'ms_dip',
         'ms_water_dip',
         'ms_opening_stock',
@@ -82,7 +82,17 @@ def literal_search(data):
         'ms_totalizer_2',
         'ms_testing',
         'ms_sales',
-        'ms_cumulative_sales'
+        'ms_cumulative_sales',
+        'hsd_dip',
+        'hsd_water_dip',
+        'hsd_opening_stock',
+        'hsd_receipt',
+        'hsd_total_stock',
+        'hsd_totalizer_1',
+        'hsd_totalizer_2',
+        'hsd_testing',
+        'hsd_sales',
+        'hsd_cumulative_sales'
     ]
 
     pattern_1 = re.compile(r'\s\d+\s')
@@ -92,10 +102,9 @@ def literal_search(data):
     for val in m:
         val_list.append(int(pattern_2.search(val).group()))
 
-    # Creating a dictionary using 2 list
-    ms_dsr = {ms_list[i]: val_list[i] for i in range(len(ms_list))}
-    return ms_dsr
-
+    # Creating ms dictionary using 2 list
+    dsr = {ms_hsd_list[i]: val_list[i] for i in range(len(ms_hsd_list))}
+    return dsr
 
 sender = 'Sardar Khan <vyapar123@outlook.com>'
 # filter_sender(connect(), sender)
