@@ -1,28 +1,32 @@
-
 import scrapy
+from scrapy_selenium import SeleniumRequest
+from selenium.webdriver.common.keys import Keys
+from scrapy.selector import Selector
+import re
+from scrapy.shell import inspect_response
+
 
 
 class FundSpider(scrapy.Spider):
     name = 'fund'
-    start_urls = [
-        'https://www.valueresearchonline.com/funds/selector/primary-category/1/equity/?plan-type=direct&tab=snapshot'
-    ]
+    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'
+    def start_requests(self):
+        yield SeleniumRequest(
+            # url = 'https://www.valueresearchonline.com/funds/selector/primary-category/1/equity/?plan-type=direct&tab=snapshot',
+            url = 'https://quotes.toscrape.com/',
+            wait_time = 3,
+            screenshot=True,
+            callback=self.parse,
+        )
 
-    """
-    Getting the table th data in https://www.w3schools.com/html/html_tables.asp
-    response.xpath('//*[@id="customers"]/tr/td/text()').getall()
-
-    Getting the selector of center-block class in value research online site
-    response.xpath("//*[contains(concat(' ', normalize-space(@class), ' '), ' center-block ')]").getall()
-    """
     def parse(self, response):
-        # data = response.css("tbody tr[role='row'] td:first-of-type a::text").getall()
-        data = response.css('#selector-tab li a::text').getall()
-        # Since data is an list, it can not be returned by scrapy.
-        # it can either be request, item or None
-        row_list = dict()
-        for index, value in enumerate(data):
-            row_list[index] = value
-        yield row_list
-
-    # scraping dynamic website using javascript
+        # view(response)
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        print(response.request.headers['User-Agent'])
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        # inspect_response(response, self)
+        # data = response.css('#selector-tab li a::text').getall()
+        # row_list = dict()
+        # for index, value in enumerate(data):
+        #     row_list[index] = value
+        # yield row_list
