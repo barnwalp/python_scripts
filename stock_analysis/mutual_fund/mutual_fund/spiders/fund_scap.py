@@ -9,12 +9,11 @@ from scrapy.shell import inspect_response
 
 class FundSpider(scrapy.Spider):
     name = 'fund'
-    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'
     def start_requests(self):
         yield SeleniumRequest(
-            # url = 'https://www.valueresearchonline.com/funds/selector/primary-category/1/equity/?plan-type=direct&tab=snapshot',
-            url = 'https://quotes.toscrape.com/',
-            wait_time = 3,
+            url = 'https://www.valueresearchonline.com/funds/selector/primary-category/1/equity/?plan-type=direct&tab=snapshot',
+            # url = 'https://quotes.toscrape.com/',
+            wait_time = 5,
             screenshot=True,
             callback=self.parse,
         )
@@ -24,7 +23,7 @@ class FundSpider(scrapy.Spider):
         print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         print(response.request.headers['User-Agent'])
         print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        # inspect_response(response, self)
+        inspect_response(response, self)
         # data = response.css('#selector-tab li a::text').getall()
         # row_list = dict()
         # for index, value in enumerate(data):
