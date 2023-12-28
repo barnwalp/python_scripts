@@ -13,8 +13,11 @@ import pyautogui, time
 # pyautogui.displayMousePosition()
 
 # x = 1866, y=1048
+# x = 1370, y=930
+mouse_x = 1370;
+mouse_y = 930;
 while True:
     # pyautogui.moveTo(1593, 1037)
-    pyautogui.moveTo(1866, 1048)
+    pyautogui.moveTo(mouse_x, mouse_y)
     time.sleep(5)
     pyautogui.click()
