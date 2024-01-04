@@ -11,24 +11,25 @@ def send_mail(content):
     load_dotenv()
 
     # Access environment variables
-    outlook_user = os.getenv('OUTLOOK_USER')
-    outlook_password = os.getenv('OUTLOOK_PASS')
+    user = os.getenv('ID')
+    domain = os.getenv('DOMAIN')
+    outlook_password = os.getenv('PASS')
     outlook_server = os.getenv('OUTLOOK_SERVER')
     outlook_email = os.getenv('OUTLOOK_EMAIL')
+    outlook_user = f"{domain}\\{user}"
 
     print(f"outlook data: {outlook_user, outlook_password, outlook_server, outlook_email}")
-    print("ioc\\00504802");
 
-    logging.basicConfig(level=logging.DEBUG, handlers=[PrettyXmlHandler()])
+    # logging.basicConfig(level=logging.DEBUG, handlers=[PrettyXmlHandler()])
 
     credentials = Credentials(
-        username="ioc\\00504802",
-        password="Umami@01"
+        username=outlook_user,
+        password=outlook_password
         )
 
     config = Configuration(
         # server="mail.indianoil.in/EWS/Exchange.asmx",
-        server="mail.indianoil.in",
+        server=outlook_server,
         # retry_policy=FaultTolerance(max_wait=3600),
         credentials=credentials,
         )
