@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+o365 = "*"
 
 [dev-packages]
 
